@@ -22,10 +22,7 @@ def loadFile(path):
             for counter, col in enumerate(row):
                 infoDict[columnInfo[counter]].append(col)
 
-        for key, value in infoDict.items():
-            print(key, '->', value)
-
         # Return the parsed infomation in the format of a dict       
         return infoDict
     
-loadFile('Team2-GroupAssignment\Parser\dc-crimes-search-results.csv')
+loadFile('dc-crimes-search-results.csv')
