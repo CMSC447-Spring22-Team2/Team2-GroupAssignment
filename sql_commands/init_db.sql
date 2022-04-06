@@ -2,7 +2,7 @@
 DROP TABLE IF EXISTS CrimeData;
 
 CREATE TABLE IF NOT EXISTS CrimeData (
-    ccn int,
+    id int primary key,
     neighborhood_cluster text,
     census_tract int,
     offense_group text,
@@ -24,14 +24,14 @@ CREATE TABLE IF NOT EXISTS CrimeData (
     x_block float, 
     block text,
     start_date text,
+    ccn int,
     offense text,
     octo_record_id text,
     anc text,
     report_date text,
     method text,
     location text,
-    latitude float,
-    id int primary key
+    latitude float
 );
 
 select * from CrimeData;

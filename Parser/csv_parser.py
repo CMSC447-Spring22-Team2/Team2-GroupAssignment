@@ -10,8 +10,8 @@ def loadFile(path):
         fileInfo = csv.reader(f)
         columnInfo = next(fileInfo)
 
-        col_list = []
-        # Go through the array and remove extra characters
+        infoDict = {}
+        # Go through the array and format column headers
         for i in range(len(columnInfo)):
             columnInfo[i] = removeExtraChars(columnInfo[i])
             if columnInfo[i] == "report_dat":
@@ -20,64 +20,62 @@ def loadFile(path):
                 columnInfo[i] = "y_block"
             if columnInfo[i] == "xblock":
                 columnInfo[i] = "x_block"
-            col_list.append(columnInfo[i])
-            if col_list[i] == "ccn":
-                col_list[i] = col_list[0]
-                col_list[0] = "ccn"
-
-        # Create dict from the column info
-        infoDict = { i : [] for i in columnInfo }
+            infoDict[columnInfo[i]] = []
 
         # Parse through the rest of the file and add info to the map accordingly
         for row in fileInfo:
-            for counter, col in enumerate(row):
-                infoDict[columnInfo[counter]].append(col)
+            for column, cell in zip(columnInfo, row):
+                infoDict[column].append(cell)
 
         # Return the parsed infomation in the format of a dict       
-        return (col_list, infoDict)
-    
+        return infoDict
+
+# Helper method to convert text values into numbers
+def tryConvert(entry, func = int, default = -1):
+    return func(entry) if entry != '' else default
+
 def initDB(infoDict):
     db = sqlite3.connect('cmsc447-team2-data.db')
-    length = len( infoDict[1]['ccn'] )
-    id = 1
+
+    length = len( infoDict['neighborhood_cluster'] )
     for row in range(length):
-        row_vals = [infoDict[1][val][row] for val in infoDict[0]]
+        insertData = ( row,
+        infoDict['neighborhood_cluster'][row],
+        tryConvert(infoDict['census_tract'][row]),
+        infoDict['offense_group'][row],
+        tryConvert(infoDict['longitude'][row], float, 0),
+        infoDict['end_date'][row],
+        infoDict['offense_text'][row],
+        tryConvert(infoDict['y_block'][row], float),
+        tryConvert(infoDict['district'][row]),
+        infoDict['shift'][row],
+        tryConvert(infoDict['year'][row]),
+        tryConvert(infoDict['ward'][row]),
+        infoDict['offense_key'][row],
+        infoDict['bid'][row],
+        infoDict['sector'][row],
+        tryConvert(infoDict['ucr_rank'][row]),
+        tryConvert(infoDict['psa'][row]),
+        infoDict['block_group'][row],
+        infoDict['voting_precinct'][row],
+        tryConvert(infoDict['x_block'][row], float),
+        infoDict['block'][row],
+        infoDict['start_date'][row],
+        tryConvert(infoDict['ccn'][row]),
+        infoDict['offense'][row],
+        infoDict['octo_record_id'][row],
+        infoDict['anc'][row],
+        infoDict['report_date'][row],
+        infoDict['method'][row],
+        infoDict['location'][row],
+        tryConvert(infoDict['latitude'][row], float, 0)
+        )
+        
+        db.execute('INSERT INTO CrimeData (id, neighborhood_cluster, census_tract, offense_group, longitude, end_date, offense_text, y_block, district, shift, ward, year, offense_key, bid, sector, ucr_rank, psa, block_group, voting_precinct, x_block, block, start_date, ccn, offense, octo_record_id, anc, report_date, method, location, latitude) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', insertData)
 
-        ccn = int(row_vals[0])
-        neighborhood_cluster = row_vals[21] 
-        census_tract = int(row_vals[2]) if row_vals[2 ] != '' else -1
-        offense_group = row_vals[1]
-        longitude = float(row_vals[3]) if row_vals[3] != '' else -1
-        end_date = row_vals[4]
-        offense_text = row_vals[5]
-        y_block = float(row_vals[6])
-        district = int(row_vals[7]) if row_vals[7] != '' else -1
-        shift = row_vals[8]
-        year = int(row_vals[9])  if row_vals[9] != '' else -1
-        ward = int(row_vals[10]) if row_vals[10] != '' else -1
-        offense_key = row_vals[11]
-        bid = row_vals[12]
-        sector = row_vals[13]
-        ucr_rank = int(row_vals[14]) if row_vals[14] != '' else -1
-        psa = int(row_vals[15]) if row_vals[15] != '' else -1
-        block_group = row_vals[16]
-        voting_precinct = row_vals[17]
-        x_block = float(row_vals[18]) if row_vals[15] != '' else -1
-        block = row_vals[19]
-        start_date = row_vals[20]
-        offense = row_vals[22]
-        octo_record_id = row_vals[23]
-        anc = row_vals[24]
-        report_date = row_vals[25]
-        method = row_vals[26]
-        location = row_vals[27]
-        latitude = float(row_vals[28]) if row_vals[28] != '' else -1
-
-        db.execute('INSERT INTO CrimeData (ccn, neighborhood_cluster, census_tract, offense_group, longitude, end_date, offense_text, y_block, district, shift, ward, year, offense_key, bid, sector, ucr_rank, psa, block_group, voting_precinct, x_block, block, start_date, offense, octo_record_id, anc, report_date, method, location, latitude, id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', (ccn, neighborhood_cluster, census_tract, offense_group, longitude, end_date, offense_text, y_block, district, shift, ward, year, offense_key, bid, sector, ucr_rank, psa, block_group, voting_precinct, x_block, block, start_date, offense, octo_record_id, anc, report_date, method, location, latitude, id ))
-        db.commit()
-
-        id = id + 1
+    db.commit()
+    db.close()
 
 
-infoDict = loadFile('Parser\dc-crimes-search-results.csv')
+infoDict = loadFile('Parser/dc-crimes-search-results.csv')
 initDB(infoDict)
