@@ -37,41 +37,50 @@ def tryConvert(entry, func = int, default = -1):
 def initDB(infoDict):
     db = sqlite3.connect('cmsc447-team2-data.db')
 
+    # Get length using the length of a column with no blank entries
     length = len( infoDict['neighborhood_cluster'] )
     for row in range(length):
-        insertData = ( row,
-        infoDict['neighborhood_cluster'][row],
-        tryConvert(infoDict['census_tract'][row]),
-        infoDict['offense_group'][row],
-        tryConvert(infoDict['longitude'][row], float, 0),
-        infoDict['end_date'][row],
-        infoDict['offense_text'][row],
-        tryConvert(infoDict['y_block'][row], float),
-        tryConvert(infoDict['district'][row]),
-        infoDict['shift'][row],
-        tryConvert(infoDict['year'][row]),
-        tryConvert(infoDict['ward'][row]),
-        infoDict['offense_key'][row],
-        infoDict['bid'][row],
-        infoDict['sector'][row],
-        tryConvert(infoDict['ucr_rank'][row]),
-        tryConvert(infoDict['psa'][row]),
-        infoDict['block_group'][row],
-        infoDict['voting_precinct'][row],
-        tryConvert(infoDict['x_block'][row], float),
-        infoDict['block'][row],
-        infoDict['start_date'][row],
-        tryConvert(infoDict['ccn'][row]),
-        infoDict['offense'][row],
-        infoDict['octo_record_id'][row],
-        infoDict['anc'][row],
-        infoDict['report_date'][row],
-        infoDict['method'][row],
-        infoDict['location'][row],
-        tryConvert(infoDict['latitude'][row], float, 0)
+        crimeData = (row,
+            infoDict['offense'][row],
+            infoDict['offense_group'][row],
+            infoDict['offense_text'][row],
+            infoDict['offense_key'][row],
+            infoDict['method'][row],
+            tryConvert(infoDict['ucr_rank'][row]),
+            tryConvert(infoDict['psa'][row]),
+            tryConvert(infoDict['ccn'][row]),
+            infoDict['octo_record_id'][row],
         )
-        
-        db.execute('INSERT INTO CrimeData (id, neighborhood_cluster, census_tract, offense_group, longitude, end_date, offense_text, y_block, district, shift, ward, year, offense_key, bid, sector, ucr_rank, psa, block_group, voting_precinct, x_block, block, start_date, ccn, offense, octo_record_id, anc, report_date, method, location, latitude) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', insertData)
+
+        locationData = (row,
+            infoDict['neighborhood_cluster'][row],
+            tryConvert(infoDict['census_tract'][row]),
+            tryConvert(infoDict['longitude'][row], float, 0),
+            tryConvert(infoDict['latitude'][row], float, 0),
+            infoDict['location'][row],
+            infoDict['block'][row],
+            infoDict['block_group'][row],
+            tryConvert(infoDict['x_block'][row], float),
+            tryConvert(infoDict['y_block'][row], float),
+            tryConvert(infoDict['district'][row]),
+            tryConvert(infoDict['ward'][row]),
+            infoDict['sector'][row],
+            infoDict['bid'][row],
+            infoDict['voting_precinct'][row],
+            infoDict['anc'][row],
+        )
+
+        timeData = (row,
+            infoDict['start_date'][row],
+            infoDict['end_date'][row],
+            infoDict['report_date'][row],
+            tryConvert(infoDict['year'][row]),
+            infoDict['shift'][row],
+        )
+
+        db.execute('INSERT INTO CrimeData (id, offense, offense_group, offense_text, offense_key, method, ucr_rank, psa, ccn, octo_record_id) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', crimeData)
+        db.execute('INSERT INTO CrimeLocation (id, neighborhood_cluster, census_tract, longitude, latitude, location, block, block_group, x_block, y_block, district, ward, sector, bid, voting_precinct, anc) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', locationData)
+        db.execute('INSERT INTO CrimeTime (id, start_date, end_date, report_date, year, shift) VALUES(?, ?, ?, ?, ?, ?)', timeData)
 
     db.commit()
     db.close()
