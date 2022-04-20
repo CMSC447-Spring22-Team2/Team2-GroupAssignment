@@ -1,8 +1,12 @@
+import Footer from "../components/Footer";
+import Navbar from "../components/Navbar";
 
-function HomePage() {
+export default function Home() {
   return (
-    <h1>Test</h1>
+    <div>
+      <Navbar />
+      <h1>Test</h1>
+      <Footer />
+    </div>
   )
 }
-
-export default HomePage;
