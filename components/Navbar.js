@@ -1,15 +1,30 @@
 import Link from 'next/link'
+import {
+  AppBar,
+  Button,
+  Container,
+  MenuItem,
+  Toolbar,
+  Typography,
+} from '@mui/material'
+
+const pages = ['']
 
 const Navbar = () => {
-    return (
-        <nav>
-            <div>
-                <h1>Mark 2</h1>
-            </div>
-            <Link href="/"><a>Home</a></Link>
-            <Link href='/crimeDescription'><a>Crime Description</a></Link>
-        </nav>
-    );
+  return (
+    <AppBar position="static">
+      <Container>
+        <Toolbar>
+          <Link href="/">
+            <MenuItem>Home</MenuItem>
+          </Link>
+          <Link href="/crimeDescription">
+            <MenuItem>Crime Description</MenuItem>
+          </Link>
+        </Toolbar>
+      </Container>
+    </AppBar>
+  )
 }
- 
-export default Navbar;
+
+export default Navbar
