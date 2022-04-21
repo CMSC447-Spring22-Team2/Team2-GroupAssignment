@@ -18,10 +18,41 @@ a {
 }
 
 * {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
+}
+
+main {
+  width: 90vw;
+  margin: 0 auto;
+  padding: 30px 20px;
+  min-height: calc(100vh - 64px - 114px)
+}
+
+article {
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+
+
+article p {
+  margin-top: 16px;
+  line-height: 24px;
 }
 
 .Map {
   max-width: 960px;
   margin: 0 auto;
+  padding: 20px;
+}
+
+footer {
+  text-align: center;
+  background: #1a76d2;
+  color: #fff;
+  padding: 20px;
 }
