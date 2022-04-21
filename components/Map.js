@@ -3,8 +3,10 @@ import L from 'leaflet'
 import Base from '../data/Basemap_of_DC.json'
 import Cluster from '../data/Neighborhood_Clusters.json'
 import 'leaflet/dist/leaflet.css'
+import { useRouter } from 'next/router'
 
 export default function Map() {
+  const router = useRouter()
   const state = {
     center: {
       lng: 38.9072,
@@ -18,13 +20,18 @@ export default function Map() {
     fillColor: 'red',
     fillOpacity: 0.1,
     color: 'black',
-    weight: 2,
+    weight: 3,
   }
 
   const position = [state.center.lng, state.center.lat]
+  const geojson = L.geoJson(Cluster, {
+    style: clusterStyle,
+    onEachFeature: onEachFeature,
+  })
 
   const onClusterClick = (e) => {
-    console.log(e)
+    const id = e.target.feature.properties.NAME.replace(/\D/g, '')
+    router.push(`/cluster/${id}`)
   }
 
   const highlightFeature = (e) => {
@@ -43,7 +50,7 @@ export default function Map() {
     geojson.resetStyle(e.target)
   }
 
-  const onEachCluster = (cluster, layer) => {
+  const onEachFeature = (cluster, layer) => {
     const name = cluster.properties.NAME
     const nbhNames = cluster.properties.NBH_NAMES
 
@@ -52,16 +59,8 @@ export default function Map() {
       click: onClusterClick,
       mouseover: highlightFeature,
       mouseout: resetHighlight,
-
-      // console.log(name)
-      // console.log(nbhNames)
     })
   }
-
-  const geojson = L.geoJson(Cluster, {
-    style: clusterStyle,
-    onEachFeature: onEachCluster,
-  })
 
   return (
     <>
@@ -79,7 +78,7 @@ export default function Map() {
         <GeoJSON
           data={Cluster}
           style={clusterStyle}
-          onEachFeature={onEachCluster}
+          onEachFeature={onEachFeature}
         />
       </MapContainer>
     </>

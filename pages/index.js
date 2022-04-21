@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <>
       <div>
-        <h1>Test</h1>
+        <h1>Washington D.C. Crime Statistics</h1>
         <MapWithNoSSR className={styles.map} />
       </div>
     </>
