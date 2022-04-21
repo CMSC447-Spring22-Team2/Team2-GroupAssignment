@@ -7,6 +7,7 @@ import { useRouter } from 'next/router'
 import 'leaflet/dist/leaflet.css'
 
 export default function Map() {
+  const [cluster, setCluster] = useState(null)
   const router = useRouter()
 
   const state = {
@@ -38,7 +39,7 @@ export default function Map() {
 
   const highlightFeature = (e) => {
     const layer = e.target
-    // layer.openPopup()
+
     layer.setStyle({
       weight: 5,
       color: '#666',
@@ -46,10 +47,12 @@ export default function Map() {
       fillOpacity: 0.7,
     })
     layer.bringToFront()
+    // setCluster(layer.feature.properties.NAME)
   }
 
   const resetHighlight = (e) => {
     const layer = e.target
+    setCluster('Cluster')
     layer.closePopup()
     geojson.resetStyle(e.target)
   }
@@ -68,6 +71,7 @@ export default function Map() {
 
   return (
     <>
+      <p>{cluster}</p>
       <MapContainer
         center={position}
         zoom={state.zoom}
