@@ -23,18 +23,9 @@ ChartJS.register(
   Legend,
   ArcElement
 )
-import useSWR from 'swr'
 
-export default function offense() {
-  const fetcher = async (url) => fetch(url).then((res) => res.json())
-
-  const { data: offense } = useSWR('/api/cluster', fetcher)
-  const data = (offense ?? []).map(
-    (id) =>
-      // console.log(id.offense)
-      id.offense
-  )
-  console.log(data)
+export default function offense({ data }) {
+  console.log(data[0])
 
   const options = {
     responsive: true,
@@ -107,9 +98,10 @@ export default function offense() {
   return (
     <main>
       <title>Offense Type</title>
-      <p>{data[0]}</p>
       <div className={style.title}>
         <h1>Distribution of Crimes by Offense</h1>
+        <p>{data[0].offense}</p>
+
         <div className={styles.grid}>
           <Bar className={styles.card} options={options} data={dataBar} />
           <Pie className={styles.card} data={dataPie} />
@@ -117,4 +109,15 @@ export default function offense() {
       </div>
     </main>
   )
+}
+
+export async function getStaticProps() {
+  const res = await fetch('http://localhost:3000/api/cluster')
+  const data = await res.json()
+
+  return {
+    props: {
+      data,
+    },
+  }
 }
