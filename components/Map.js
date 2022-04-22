@@ -1,9 +1,10 @@
 import { MapContainer, TileLayer, GeoJSON, Popup } from 'react-leaflet'
-import L from 'leaflet'
-import Base from '../data/Basemap_of_DC.json'
-import Cluster from '../data/Neighborhood_Clusters.json'
-import 'leaflet/dist/leaflet.css'
 import { useRouter } from 'next/router'
+import L from 'leaflet'
+
+import Cluster from '../data/Neighborhood_Clusters.json'
+
+import 'leaflet/dist/leaflet.css'
 
 export default function Map() {
   const router = useRouter()
@@ -24,7 +25,7 @@ export default function Map() {
   }
 
   const position = [state.center.lng, state.center.lat]
-  const geojson = L.geoJson(Cluster, {
+  const geojson = L.geoJSON(Cluster, {
     style: clusterStyle,
     onEachFeature: onEachFeature,
   })
@@ -41,7 +42,7 @@ export default function Map() {
       color: 'black',
       fillOpacity: 0.7,
     })
-
+    // layer.bindPopup(layer.feature.properties.NAME).openPopup()
     layer.bringToFront()
   }
 
@@ -53,7 +54,6 @@ export default function Map() {
     const name = cluster.properties.NAME
     const nbhNames = cluster.properties.NBH_NAMES
 
-    layer.bindPopup(name)
     layer.on({
       click: onClusterClick,
       mouseover: highlightFeature,
@@ -73,7 +73,6 @@ export default function Map() {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        {/* <GeoJSON data={Base} /> */}
         <GeoJSON
           data={Cluster}
           style={clusterStyle}
