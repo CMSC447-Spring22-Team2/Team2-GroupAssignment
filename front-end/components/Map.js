@@ -7,7 +7,7 @@ import { useRouter } from 'next/router'
 import 'leaflet/dist/leaflet.css'
 
 export default function Map() {
-  const [cluster, setCluster] = useState(null)
+  const [cluster, setCluster] = useState('Cluster')
   const router = useRouter()
 
   const state = {
