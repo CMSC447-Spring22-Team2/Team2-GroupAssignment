@@ -1,4 +1,26 @@
-import styles from '../styles/Offense.module.css'
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  ArcElement,
+} from 'chart.js'
+import { Bar, Pie } from 'react-chartjs-2'
+import faker from '@faker-js/faker'
+import styles from '../styles/Home.module.css'
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  ArcElement
+)
 
 export default function offense() {
   const options = {
@@ -72,7 +94,7 @@ export default function offense() {
   return (
     <main>
       <title>Offense Type</title>
-      <div className={styles.title}>
+      <div>
         <h1>Distribution of Crimes by Offense</h1>
         <p>Lorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsum</p>
         <div className={styles.grid}>
