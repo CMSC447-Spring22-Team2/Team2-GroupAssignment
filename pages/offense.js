@@ -1,3 +1,5 @@
+import style from '../styles/Offense.module.css'
+
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -94,9 +96,8 @@ export default function offense() {
   return (
     <main>
       <title>Offense Type</title>
-      <div>
+      <div className={style.title}>
         <h1>Distribution of Crimes by Offense</h1>
-        <p>Lorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsum</p>
         <div className={styles.grid}>
           <Bar className={styles.card} options={options} data={dataBar} />
           <Pie className={styles.card} data={dataPie} />
