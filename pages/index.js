@@ -18,7 +18,7 @@ export default function Home() {
         </div>
         
         <article>
-          <h2>Distribution of Crimes by District</h2>
+          <h2><a href='/district'>Distribution of Crimes by District</a></h2>
           <p>Lorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsum
           Lorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsum
           Lorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsum
@@ -27,7 +27,7 @@ export default function Home() {
         </article>
 
         <article>
-            <h2>Distribution of Crimes by Offense</h2>
+            <h2><a href='/offense'>Distribution of Crimes by Offense</a></h2>
             <p>Lorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsum
           Lorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsum
           Lorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsum
@@ -36,7 +36,7 @@ export default function Home() {
         </article>
 
         <article>
-          <h2>Distribution of Crimes by Time</h2>
+          <h2><a href='/time'>Distribution of Crimes by Time</a></h2>
           <p>Lorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsum
           Lorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsum
           Lorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsum

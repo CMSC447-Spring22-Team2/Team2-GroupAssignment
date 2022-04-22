@@ -1,11 +1,11 @@
+import styles from '../styles/Time.module.css'
 
 export default function time() {
   return (
     <main>
         <title>Time of Crimes</title>
-        <div>
+        <div className={styles.title}>
             <h1>Distribution of Crimes by Time</h1>
-            <p>Lorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsum</p>
         </div>
     </main>
     
