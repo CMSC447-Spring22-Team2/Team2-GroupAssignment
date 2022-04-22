@@ -27,10 +27,9 @@ const Navbar = () => {
             <MenuItem>Offense</MenuItem>
           </Link>
 
-          <Link href="time">
+          <Link href="/time">
             <MenuItem>Time</MenuItem>
           </Link>
-
         </Toolbar>
       </Container>
     </AppBar>

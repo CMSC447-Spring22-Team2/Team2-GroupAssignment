@@ -13,13 +13,13 @@ export default function Map() {
       lat: -77.0369,
     },
     zoom: 13,
-    scroll: true,
+    scroll: false,
   }
 
   const clusterStyle = {
     fillColor: 'red',
     fillOpacity: 0.1,
-    color: 'black',
+    color: 'dimgray',
     weight: 3,
   }
 
@@ -38,8 +38,7 @@ export default function Map() {
     const layer = e.target
     layer.setStyle({
       weight: 5,
-      color: '#666',
-      dashArray: '',
+      color: 'black',
       fillOpacity: 0.7,
     })
 
