@@ -8,10 +8,7 @@ export default async function handler(req, res) {
   })
 
   if (req.method === 'GET') {
-    const data = await db.all(
-      'SELECT * FROM CrimeLocation JOIN CrimeData ON CrimeData.id = CrimeLocation.id WHERE neighborhood_cluster = ?',
-      ['cluster 13']
-    )
+    const data = await db.all('SELECT neighborhood_cluster FROM CrimeLocation')
     res.status(200).json(data)
   }
 }

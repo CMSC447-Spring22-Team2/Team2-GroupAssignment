@@ -10,7 +10,7 @@ import {
   Legend,
   ArcElement,
 } from 'chart.js'
-import { Bar, Pie } from 'react-chartjs-2'
+import { Bar, Doughnut } from 'react-chartjs-2'
 import faker from '@faker-js/faker'
 import styles from '../styles/Home.module.css'
 
@@ -25,8 +25,6 @@ ChartJS.register(
 )
 
 export default function offense({ data }) {
-  console.log(data[0])
-
   const options = {
     responsive: true,
     plugins: {
@@ -100,24 +98,23 @@ export default function offense({ data }) {
       <title>Offense Type</title>
       <div className={style.title}>
         <h1>Distribution of Crimes by Offense</h1>
-        <p>{data[0].offense}</p>
-
-        <div className={styles.grid}>
-          <Bar className={styles.card} options={options} data={dataBar} />
-          <Pie className={styles.card} data={dataPie} />
-        </div>
+        {/* <p>{data[0].offense_key}</p> */}
+      </div>
+      <div className={styles.grid}>
+        <Bar className={styles.card} options={options} data={dataBar} />
+        <Doughnut className={styles.card} data={dataPie} />
       </div>
     </main>
   )
 }
 
-export async function getStaticProps() {
-  const res = await fetch('http://localhost:3000/api/cluster')
-  const data = await res.json()
+// export async function getStaticProps() {
+//   const res = await fetch('/api/cluster')
+//   const data = await res.json()
 
-  return {
-    props: {
-      data,
-    },
-  }
-}
+//   return {
+//     props: {
+//       data,
+//     },
+//   }
+// }
