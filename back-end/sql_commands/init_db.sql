@@ -4,7 +4,8 @@ DROP TABLE IF EXISTS CrimeLocation;
 DROP TABLE IF EXISTS CrimeTime;
 
 CREATE TABLE IF NOT EXISTS CrimeData (
-    id int primary key,
+    crime_id int primary key,
+    location_id int NOT NULL,
     offense text,
     offense_group text,
     offense_text text,
@@ -13,11 +14,17 @@ CREATE TABLE IF NOT EXISTS CrimeData (
     ucr_rank int,
     psa int, 
     ccn int,
-    octo_record_id text
+    octo_record_id text,
+    start_date text,
+    end_date text,
+    report_date text,
+    year int,
+    shift text,
+    FOREIGN KEY(location_id) REFERENCES CrimeLocation (location_id)
 );
 
 CREATE TABLE IF NOT EXISTS CrimeLocation (
-    id int NOT NULL,
+    location_id int primary_key,
     neighborhood_cluster text,
     census_tract int,
     longitude float,
@@ -32,16 +39,5 @@ CREATE TABLE IF NOT EXISTS CrimeLocation (
     sector text,
     bid text,
     voting_precinct text,
-    anc text,
-    FOREIGN KEY (id) REFERENCES CrimeData (id)
-);
-
-CREATE TABLE IF NOT EXISTS CrimeTime (
-    id int NOT NULL,
-    start_date text,
-    end_date text,
-    report_date text,
-    year int,
-    shift text,
-    FOREIGN KEY (id) REFERENCES CrimeData (id)
+    anc text
 );
