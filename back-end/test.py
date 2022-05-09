@@ -3,5 +3,5 @@
 
 import back_end_api
 import back_end_api.internal_funcs as in_funcs
-result = in_funcs.in_get_all_data_for_id(1)
+result = in_funcs.in_get_column('census_tract')
 print(result)

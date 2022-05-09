@@ -10,5 +10,8 @@ def get_location_data_for_id(id):
 def get_all_data_for_id(id):
 	return json.dumps(in_get_all_data_for_id(id))
 
-def get_list_for(trgt):
-	return json.dumps(in_get_list_for(trgt))
+def get_column(col_name):
+	return json.dumps(in_get_column(col_name))
+
+def get_columns(col_list):
+	return json.dumps(in_get_columns(col_list))
