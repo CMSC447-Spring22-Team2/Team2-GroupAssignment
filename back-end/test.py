@@ -2,5 +2,6 @@
 # It is otherwise safe to remove. 
 
 import back_end_api
-result = back_end_api.get_all_data_for_id(2)
+import back_end_api.internal_funcs as in_funcs
+result = in_funcs.in_get_all_data_for_id(1)
 print(result)
