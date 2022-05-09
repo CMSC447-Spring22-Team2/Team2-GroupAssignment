@@ -100,7 +100,7 @@ def in_get_all_data_for_id(id: Union[int, str]) -> dict[str, any]:
 	return ret_dict
 
 def in_get_column(col_name: str) -> list:
-	trgt = trgt.lower()
+	col_name = col_name.lower()
 	result = query_db('SELECT ' + col_name + ' FROM CrimeData INNER JOIN CrimeLocation ON CrimeLocation.location_id = CrimeData.location_id')
 	if len(result) == 0:
 		return []
