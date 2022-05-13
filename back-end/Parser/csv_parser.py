@@ -93,7 +93,7 @@ def initDB(infoDict):
     Does not clear/check existing tables - make sure the database does not exist/is clear before use!
     Data labels used are hard coded, so introducing new variables will require manual adjustment.
     '''
-    db = sqlite3.connect(getFilePath('../cmsc447-team2-data.db'))
+    db = sqlite3.connect(getFilePath('../../cmsc447-team2-data.db'))
     init_db_sql = open(getFilePath('../sql_commands/init_db.sql'))
     db.executescript(init_db_sql.read())
 
