@@ -15,6 +15,7 @@ export default function Document() {
           integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
           crossOrigin=""
         ></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
       </Head>
       <body>
         <Main />

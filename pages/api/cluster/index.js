@@ -8,7 +8,15 @@ export default async function handler(req, res) {
   })
 
   if (req.method === 'GET') {
-    const data = await db.all('SELECT neighborhood_cluster FROM CrimeLocation')
+    const data = await db.all('SELECT offense FROM CrimeData')
+
+    const arr = []
+    for (let i in data) {
+      arr.push(data[i].offense)
+    }
+
+    const labels = arr.filter((v, i, a) => a.indexOf(v) === i)
+    console.log(labels)
     res.status(200).json(data)
   }
 }
