@@ -1,5 +1,5 @@
 {
-    "offenses": [
+    "offense_types": [
         "theft/other",
         "theft f/auto",
         "burglary",
@@ -9,5 +9,9 @@
         "sex abuse",
         "homicide",
         "arson"
+    ], 
+    "offense_group": [
+        "property",
+        "violent"
     ]
 }

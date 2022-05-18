@@ -1,6 +1,4 @@
 import { Bar } from 'react-chartjs-2'
-import faker from '@faker-js/faker'
-import styles from '../../styles/Home.module.css'
 
 export default function BarChart({ labels, data }) {
   const options = {
@@ -22,15 +20,11 @@ export default function BarChart({ labels, data }) {
           precision: 0,
         },
       },
-      x: {
-        ticks: {
-          align: 'center',
-        },
-      },
     },
     maintainAspectRation: false,
   }
-  const dataBar = {
+
+  const chartData = {
     labels,
     datasets: [
       {
@@ -42,7 +36,7 @@ export default function BarChart({ labels, data }) {
       },
     ],
   }
-  //   return <Bar className={styles.card} options={options} data={dataBar} />
+  //   return <Bar className={styles.card} options={options} data={chartData} />
 
-  return <Bar options={options} data={dataBar} />
+  return <Bar options={options} data={chartData} />
 }
