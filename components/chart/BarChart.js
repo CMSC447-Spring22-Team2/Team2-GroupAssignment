@@ -4,6 +4,7 @@ import styles from '../../styles/Home.module.css'
 
 export default function BarChart({ labels, data }) {
   const options = {
+    indexAxis: 'y',
     responsive: true,
     plugins: {
       legend: {
@@ -11,7 +12,20 @@ export default function BarChart({ labels, data }) {
       },
       title: {
         display: true,
-        text: 'Bar Chart',
+        text: 'Number of Crimes by Type',
+      },
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        ticks: {
+          precision: 0,
+        },
+      },
+      x: {
+        ticks: {
+          align: 'center',
+        },
       },
     },
     maintainAspectRation: false,
@@ -20,10 +34,10 @@ export default function BarChart({ labels, data }) {
     labels,
     datasets: [
       {
-        label: 'Dataset 1',
+        label: 'Offenses',
         data: data,
-        backgroundColor: 'rgba(255, 159, 64, 0.2)',
-        borderColor: 'rgba(255, 159, 64, 1)',
+        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+        borderColor: 'rgba(54, 162, 235, 1)',
         borderWidth: 1,
       },
     ],
