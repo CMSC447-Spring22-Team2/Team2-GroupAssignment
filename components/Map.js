@@ -6,6 +6,11 @@ import Cluster from '../data/Neighborhood_Clusters.json'
 
 import 'leaflet/dist/leaflet.css'
 
+import useSWR from 'swr'
+import Labels from '../data/Labels.json'
+
+const fetcher = async (url) => await fetch(url).then((res) => res.json())
+
 export default function Map() {
   const router = useRouter()
   const state = {
@@ -17,11 +22,38 @@ export default function Map() {
     scroll: false,
   }
 
-  const clusterStyle = {
-    fillColor: 'red',
-    fillOpacity: 0.1,
-    color: 'dimgray',
-    weight: 3,
+  const totalCrimes = Labels.total_crimes
+
+  const getColor = (d) => {
+    return d > 4000
+      ? '#800026'
+      : d > 3000
+      ? '#BD0026'
+      : d > 2000
+      ? '#E31A1C'
+      : d > 1000
+      ? '#FC4E2A'
+      : d > 500
+      ? '#FD8D3C'
+      : d > 200
+      ? '#FEB24C'
+      : d > 100
+      ? '#FED976'
+      : '#FFEDA0'
+  }
+
+  // const { data, error } = useSWR(`/api/cluster/`, fetcher)
+  // console.log(Object.keys(data ?? []).length)
+
+  const clusterStyle = (feature) => {
+    const id = feature.properties.NAME.replace(/\D/g, '')
+    return {
+      // fillColor: 'red',
+      fillColor: getColor(totalCrimes[`cluster ${id}`]),
+      fillOpacity: 0.5,
+      color: 'dimgray',
+      weight: 3,
+    }
   }
 
   const position = [state.center.lng, state.center.lat]
@@ -37,10 +69,11 @@ export default function Map() {
 
   const highlightFeature = (e) => {
     const layer = e.target
+
     layer.setStyle({
       weight: 5,
       color: 'black',
-      fillOpacity: 0.7,
+      fillOpacity: 0.8,
     })
     // layer.bindPopup(layer.feature.properties.NAME).openPopup()
     layer.bringToFront()
