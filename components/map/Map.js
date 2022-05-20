@@ -1,13 +1,14 @@
-import { MapContainer, TileLayer, GeoJSON, Popup } from 'react-leaflet'
+import { MapContainer, TileLayer, GeoJSON, useMap } from 'react-leaflet'
 import { useRouter } from 'next/router'
 import L from 'leaflet'
 
-import Cluster from '../data/Neighborhood_Clusters.json'
+import Cluster from '../../data/Neighborhood_Clusters.json'
+import Legend from './Legend'
 
 import 'leaflet/dist/leaflet.css'
 
 import useSWR from 'swr'
-import Labels from '../data/Labels.json'
+import Labels from '../../data/Labels.json'
 
 const fetcher = async (url) => await fetch(url).then((res) => res.json())
 
@@ -111,6 +112,7 @@ export default function Map() {
           style={clusterStyle}
           onEachFeature={onEachFeature}
         />
+        <Legend />
       </MapContainer>
     </>
   )

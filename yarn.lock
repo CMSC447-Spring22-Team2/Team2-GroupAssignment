@@ -1878,6 +1878,18 @@
   dependencies:
     "language-subtag-registry" "~0.3.2"
 
+"leaflet-legend@^1.0.2":
+  "integrity" "sha1-8gBBPW0IOTvXZbbRj3Uv0fH0VUg="
+  "resolved" "https://registry.npmjs.org/leaflet-legend/-/leaflet-legend-1.0.2.tgz"
+  "version" "1.0.2"
+  dependencies:
+    "leaflet" "^0.7.7"
+
+"leaflet@^0.7.7":
+  "integrity" "sha1-HjUrpU5j0HZFH6NjyQCJDLLPde4="
+  "resolved" "https://registry.npmjs.org/leaflet/-/leaflet-0.7.7.tgz"
+  "version" "0.7.7"
+
 "leaflet@^1.8.0":
   "integrity" "sha512-gwhMjFCQiYs3x/Sf+d49f10ERXaEFCPr+nVTryhAW8DWbMGqJqt9G4XuIaHmFW08zYvhgdzqXGr8AlW8v8dQkA=="
   "resolved" "https://registry.npmjs.org/leaflet/-/leaflet-1.8.0.tgz"
