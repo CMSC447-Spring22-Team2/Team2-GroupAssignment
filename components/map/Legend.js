@@ -1,7 +1,7 @@
 import { useMap } from 'react-leaflet'
 import { useEffect } from 'react'
 
-import GetColor from '../../util/GetColor'
+import GetColor from '../../lib/GetColor'
 
 import L from 'leaflet'
 

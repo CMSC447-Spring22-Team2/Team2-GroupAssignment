@@ -4,7 +4,7 @@ import L from 'leaflet'
 
 import Cluster from '../../data/Neighborhood_Clusters.json'
 import Legend from './Legend'
-import GetColor from '../../util/GetColor'
+import GetColor from '../../lib/GetColor'
 
 import 'leaflet/dist/leaflet.css'
 
