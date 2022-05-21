@@ -1,14 +1,13 @@
 import { Line } from 'react-chartjs-2'
-import moment from 'moment'
 
 import 'chartjs-adapter-moment'
 
-export default function LineChart({ data, unit, minUnit }) {
+export default function LineChart({ title, data, unit, minUnit }) {
   const options = {
     plugins: {
       title: {
         display: true,
-        text: 'Number of Crimes Over Time',
+        text: title,
       },
     },
     scales: {
@@ -35,6 +34,7 @@ export default function LineChart({ data, unit, minUnit }) {
         borderColor: 'rgba(255, 99, 132)',
         backgroundColor: 'rgba(255, 99, 132, 0.3)',
         tension: 0.4,
+        pointRadius: 0,
       },
     ],
   }

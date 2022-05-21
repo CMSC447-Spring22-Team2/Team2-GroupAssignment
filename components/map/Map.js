@@ -1,16 +1,14 @@
-import { MapContainer, TileLayer, GeoJSON, useMap } from 'react-leaflet'
+import { MapContainer, TileLayer, GeoJSON } from 'react-leaflet'
 import { useRouter } from 'next/router'
 import L from 'leaflet'
 
 import Cluster from '../../data/Neighborhood_Clusters.json'
 import Legend from './Legend'
+import GetColor from '../../util/GetColor'
 
 import 'leaflet/dist/leaflet.css'
 
-import useSWR from 'swr'
 import Labels from '../../data/Labels.json'
-
-const fetcher = async (url) => await fetch(url).then((res) => res.json())
 
 export default function Map() {
   const router = useRouter()
@@ -24,40 +22,18 @@ export default function Map() {
   }
 
   const totalCrimes = Labels.total_crimes
-
-  const getColor = (d) => {
-    return d > 4000
-      ? '#800026'
-      : d > 3000
-      ? '#BD0026'
-      : d > 2000
-      ? '#E31A1C'
-      : d > 1000
-      ? '#FC4E2A'
-      : d > 500
-      ? '#FD8D3C'
-      : d > 200
-      ? '#FEB24C'
-      : d > 100
-      ? '#FED976'
-      : '#FFEDA0'
-  }
-
-  // const { data, error } = useSWR(`/api/cluster/`, fetcher)
-  // console.log(Object.keys(data ?? []).length)
+  const position = [state.center.lng, state.center.lat]
 
   const clusterStyle = (feature) => {
     const id = feature.properties.NAME.replace(/\D/g, '')
     return {
-      // fillColor: 'red',
-      fillColor: getColor(totalCrimes[`cluster ${id}`]),
+      fillColor: GetColor(totalCrimes[`cluster ${id}`]),
       fillOpacity: 0.5,
       color: 'dimgray',
       weight: 3,
     }
   }
 
-  const position = [state.center.lng, state.center.lat]
   const geojson = L.geoJSON(Cluster, {
     style: clusterStyle,
     onEachFeature: onEachFeature,

@@ -12,27 +12,20 @@ export default async function handler(req, res) {
       'SELECT CrimeData.location_id, crime_id, neighborhood_cluster FROM CrimeLocation JOIN CrimeData ON CrimeData.location_id = CrimeLocation.location_id'
     )
 
-    const arr = {}
-    for (var i in data) {
-      if (data[i].neighborhood_cluster != '') {
-        if (data[i].neighborhood_cluster in arr) {
-          arr[data[i].neighborhood_cluster]++
-        } else {
-          arr[data[i].neighborhood_cluster] = 1
-        }
-      } else {
-        console.log('error')
-      }
-    }
-    console.log(arr)
-
-    // const arr = []
-    // for (let i in data) {
-    //   arr.push(data[i].offense)
+    // const arr = {}
+    // for (var i in data) {
+    //   if (data[i].neighborhood_cluster != '') {
+    //     if (data[i].neighborhood_cluster in arr) {
+    //       arr[data[i].neighborhood_cluster]++
+    //     } else {
+    //       arr[data[i].neighborhood_cluster] = 1
+    //     }
+    //   } else {
+    //     console.log('error')
+    //   }
     // }
+    // console.log(arr)
 
-    // const labels = arr.filter((v, i, a) => a.indexOf(v) === i)
-    // console.log(labels)
     res.status(200).json(data)
   }
 }

@@ -21,6 +21,7 @@ import style from '../../styles/Offense.module.css'
 import styles from '../../styles/Home.module.css'
 
 import Labels from '../../data/Labels.json'
+import ParseHour from '../../lib/ParseHour'
 
 import BarChart from '../../components/chart/BarChart'
 import LineChart from '../../components/chart/LineChart'
@@ -41,9 +42,6 @@ ChartJS.register(
 )
 
 const fetcher = (url) => fetch(url).then((res) => res.json())
-const parseHour = (hour) => {
-  return moment(hour, 'HH')
-}
 
 export default function Cluster() {
   const router = useRouter()
@@ -57,7 +55,6 @@ export default function Cluster() {
   const offenseTypeData = offenseTypeLabels.map(() => 0)
   const offenseGroupData = offenseGroupLabels.map(() => 0)
   const dateData = []
-  // const timeData = Array(24).fill(0)
   const timeData = []
 
   for (let i in data) {
@@ -85,7 +82,7 @@ export default function Cluster() {
       if (index !== -1) {
         timeData[index].y++
       } else {
-        timeData.push({ x: parseHour(formatTime), y: 1 })
+        timeData.push({ x: ParseHour(formatTime), y: 1 })
       }
     }
   }
@@ -101,8 +98,18 @@ export default function Cluster() {
       <div className={styles.grid}>
         <BarChart labels={offenseTypeLabels} data={offenseTypeData} />
         <DoughnutChart labels={offenseGroupLabels} data={offenseGroupData} />
-        <LineChart data={dateData} unit={'month'} minUnit={'2020-01-01'} />
-        <LineChart data={timeData} unit={'hour'} minUnit={moment('0', 'HH')} />
+        <LineChart
+          title={'# of Crimes per Month'}
+          data={dateData}
+          unit={'month'}
+          minUnit={'2020-02-01'}
+        />
+        <LineChart
+          title={'# of Crimes per Hour'}
+          data={timeData}
+          unit={'hour'}
+          minUnit={ParseHour(0)}
+        />
       </div>
     </main>
   )

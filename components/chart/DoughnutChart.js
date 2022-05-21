@@ -1,6 +1,14 @@
 import { Doughnut } from 'react-chartjs-2'
 
 export default function DoughnutChart({ labels, data }) {
+  const options = {
+    plugins: {
+      title: {
+        display: true,
+        text: '# of Crimes by Group',
+      },
+    },
+  }
   const chartData = {
     labels,
     datasets: [
@@ -14,5 +22,5 @@ export default function DoughnutChart({ labels, data }) {
     ],
   }
 
-  return <Doughnut data={chartData} />
+  return <Doughnut data={chartData} options={options} />
 }

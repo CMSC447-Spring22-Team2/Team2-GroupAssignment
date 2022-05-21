@@ -13,6 +13,7 @@ import {
 import { Bar, Doughnut } from 'react-chartjs-2'
 import faker from '@faker-js/faker'
 import styles from '../styles/Home.module.css'
+import useSWR from 'swr'
 
 ChartJS.register(
   CategoryScale,
@@ -24,7 +25,11 @@ ChartJS.register(
   ArcElement
 )
 
-export default function offense({ data }) {
+const fetcher = (url) => fetch(url).then((res) => res.json())
+
+export default function offense() {
+  const { data, error } = useSWR(`/api/cluster/`, fetcher)
+
   const options = {
     responsive: true,
     plugins: {
@@ -101,8 +106,8 @@ export default function offense({ data }) {
         {/* <p>{data[0].offense_key}</p> */}
       </div>
       <div className={styles.grid}>
-        <Bar className={styles.card} options={options} data={dataBar} />
-        <Doughnut className={styles.card} data={dataPie} />
+        <Bar options={options} data={dataBar} />
+        <Doughnut data={dataPie} />
       </div>
     </main>
   )
