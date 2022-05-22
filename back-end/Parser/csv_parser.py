@@ -155,6 +155,5 @@ def initDB(infoDict):
     db.commit()
     db.close()
 
-
-infoDict = loadFile('Parser/dc-crimes-search-results.csv')
+infoDict = loadFile(getFilePath('dc-crimes-search-results.csv'))
 initDB(infoDict)
