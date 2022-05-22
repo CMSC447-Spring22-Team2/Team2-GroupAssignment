@@ -1,6 +1,6 @@
 import { Bar } from 'react-chartjs-2'
 
-export default function BarChart({ labels, data }) {
+export default function BarChart({ labels, data, maxUnit }) {
   const options = {
     indexAxis: 'y',
     responsive: true,
@@ -14,6 +14,11 @@ export default function BarChart({ labels, data }) {
       },
     },
     scales: {
+      x: {
+        max: maxUnit,
+        // min: -3,
+        beginAtZero: true,
+      },
       y: {
         beginAtZero: true,
         ticks: {
@@ -21,7 +26,7 @@ export default function BarChart({ labels, data }) {
         },
       },
     },
-    maintainAspectRation: false,
+    maintainAspectRatio: true,
   }
 
   const chartData = {

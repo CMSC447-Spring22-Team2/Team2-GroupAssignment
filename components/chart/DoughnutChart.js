@@ -22,5 +22,7 @@ export default function DoughnutChart({ labels, data }) {
     ],
   }
 
-  return <Doughnut data={chartData} options={options} />
+  return (
+    <Doughnut width="200px" height="200px" data={chartData} options={options} />
+  )
 }

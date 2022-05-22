@@ -20,6 +20,9 @@ export default function LineChart({ title, data, unit, minUnit }) {
       },
       y: {
         min: 0,
+        ticks: {
+          stepSize: 1,
+        },
       },
     },
   }

@@ -1,5 +1,7 @@
+import { Slider } from '@mui/material'
 import dynamic from 'next/dynamic'
 import styles from '../styles/Home.module.css'
+import { useState } from 'react'
 
 const MapWithNoSSR = dynamic(() => import('../components/map/Map'), {
   ssr: false,

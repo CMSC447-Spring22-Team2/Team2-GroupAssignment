@@ -7,7 +7,6 @@ import L from 'leaflet'
 
 export default function Legend() {
   const map = useMap()
-  console.log(map)
 
   useEffect(() => {
     if (map) {
@@ -34,7 +33,6 @@ export default function Legend() {
         }
 
         div.innerHTML += labels.join('<br>')
-        console.log(div)
         return div
       }
 
