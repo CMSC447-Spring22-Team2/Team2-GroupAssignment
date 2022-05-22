@@ -48,16 +48,10 @@ export default function time({ data, filtered }) {
 
   const months_range = Labels.months_range
 
-  const marks = [
-    {
-      value: 0,
-      label: months_range[0],
-    },
-    {
-      value: 24,
-      label: months_range[24],
-    },
-  ]
+  const marks = []
+  for (let i = 0; i < 25; i += 4) {
+    marks.push({ value: i, label: months_range[i] })
+  }
 
   const [value, setValue] = useState([0, 24])
 
