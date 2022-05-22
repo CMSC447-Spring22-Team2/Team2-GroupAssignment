@@ -1,14 +1,5 @@
 import Link from 'next/link'
-import {
-  AppBar,
-  Button,
-  Container,
-  MenuItem,
-  Toolbar,
-  Typography,
-} from '@mui/material'
-
-const pages = ['']
+import { AppBar, Container, MenuItem, Toolbar } from '@mui/material'
 
 const Navbar = () => {
   return (
@@ -17,10 +8,6 @@ const Navbar = () => {
         <Toolbar>
           <Link href="/">
             <MenuItem>Home</MenuItem>
-          </Link>
-
-          <Link href="/district">
-            <MenuItem>District</MenuItem>
           </Link>
 
           <Link href="/offense">

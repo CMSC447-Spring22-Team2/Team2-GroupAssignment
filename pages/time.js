@@ -1,7 +1,5 @@
 import styles from '../styles/Time.module.css'
 
-import LineChart from '../components/chart/LineChart'
-
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -17,9 +15,14 @@ import {
   Legend,
 } from 'chart.js'
 
-import useSWR from 'swr'
+import { useState } from 'react'
+import { Grid, Typography, Slider } from '@mui/material'
 
+import LineChart from '../components/chart/LineChart'
 import { getChartData, sortByDate } from '../lib/FilterData'
+import ParseHour from '../lib/ParseHour'
+
+import Labels from '../data/Labels.json'
 
 ChartJS.register(
   CategoryScale,
@@ -34,16 +37,8 @@ ChartJS.register(
   Tooltip,
   Legend
 )
-import Slider from '@mui/material/Slider'
-import { useState } from 'react'
 
-import Labels from '../data/Labels.json'
-
-import ParseHour from '../lib/ParseHour'
-
-const fetcher = (url) => fetch(url).then((res) => res.json())
-
-export default function time({ data, filtered }) {
+export default function Time({ data, filtered }) {
   const [chartData, setChartData] = useState(filtered)
 
   const months_range = Labels.months_range
@@ -81,6 +76,9 @@ export default function time({ data, filtered }) {
         <h1>Distribution of Crimes by Time</h1>
       </div>
       <div>
+        <Typography align="right" variant="body2">
+          Filter Crime Data Based on Start and End Dates
+        </Typography>
         <Slider
           value={value}
           onChange={handleChange}
@@ -91,23 +89,29 @@ export default function time({ data, filtered }) {
           min={0}
           max={24}
         />
-        <LineChart
-          title={'# of Crimes per Month'}
-          data={dateData}
-          unit={'month'}
-        />
-        <LineChart
-          title={'# of Crimes per Hour'}
-          data={timeData}
-          unit={'hour'}
-          minUnit={ParseHour(0)}
-        />
+        <Grid container spacing={4} alignItems="flex-start">
+          <Grid item xs>
+            <LineChart
+              title={'# of Crimes per Month'}
+              data={dateData}
+              unit={'month'}
+            />
+          </Grid>
+          <Grid item xs>
+            <LineChart
+              title={'# of Crimes per Hour'}
+              data={timeData}
+              unit={'hour'}
+              minUnit={ParseHour(0)}
+            />
+          </Grid>
+        </Grid>
       </div>
     </main>
   )
 }
 
-time.getInitialProps = async (ctx) => {
+Time.getInitialProps = async (ctx) => {
   // console.log('Initial props')
   const id = ctx.query.id
   const res = await fetch(`http://localhost:3000/api/cluster/`)

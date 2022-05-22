@@ -1,8 +1,3 @@
-import style from '../styles/Offense.module.css'
-
-import BarChart from '../components/chart/BarChart'
-import DoughnutChart from '../components/chart/DoughnutChart'
-
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -18,10 +13,16 @@ import {
   Legend,
 } from 'chart.js'
 
-import styles from '../styles/Home.module.css'
-import Slider from '@mui/material/Slider'
+import style from '../styles/Offense.module.css'
 
+import { useState } from 'react'
+import { Typography, Slider, Grid } from '@mui/material'
+
+import BarChart from '../components/chart/BarChart'
+import DoughnutChart from '../components/chart/DoughnutChart'
 import { getChartData, sortByDate } from '../lib/FilterData'
+
+import Labels from '../data/Labels.json'
 
 ChartJS.register(
   CategoryScale,
@@ -37,9 +38,7 @@ ChartJS.register(
   Legend
 )
 
-import Labels from '../data/Labels.json'
-import { useState } from 'react'
-export default function offense({ data, filtered }) {
+export default function Offense({ data, filtered }) {
   const offenseTypeLabels = Labels.offense_types
   const offenseGroupLabels = Labels.offense_group
 
@@ -65,17 +64,22 @@ export default function offense({ data, filtered }) {
     setChartData(slice)
   }
 
-  const { offenseTypeData, offenseGroupData, dateData, timeData } =
-    getChartData(chartData, offenseTypeLabels, offenseGroupLabels)
+  const { offenseTypeData, offenseGroupData } = getChartData(
+    chartData,
+    offenseTypeLabels,
+    offenseGroupLabels
+  )
 
   return (
     <main>
       <title>Offense Type</title>
       <div className={style.title}>
         <h1>Distribution of Crimes by Offense</h1>
-        {/* <p>{data[0].offense_key}</p> */}
       </div>
       <div>
+        <Typography align="right" variant="body2">
+          Filter Crime Data Based on Start and End Dates
+        </Typography>
         <Slider
           getAriaLabel={() => 'Select Range of Dates'}
           value={value}
@@ -87,36 +91,28 @@ export default function offense({ data, filtered }) {
           min={0}
           max={24}
         />
-        <BarChart
-          labels={offenseTypeLabels}
-          data={offenseTypeData}
-          // maxUnit={22000}
-        />
-        <DoughnutChart labels={offenseGroupLabels} data={offenseGroupData} />
+        <Grid container spacing={4} alignItems="flex-start">
+          <Grid item xs={8}>
+            <BarChart labels={offenseTypeLabels} data={offenseTypeData} />
+          </Grid>
+          <Grid item xs={4}>
+            <DoughnutChart
+              labels={offenseGroupLabels}
+              data={offenseGroupData}
+            />
+          </Grid>
+        </Grid>
       </div>
     </main>
   )
 }
 
-offense.getInitialProps = async (ctx) => {
-  // console.log('Initial props')
+Offense.getInitialProps = async (ctx) => {
   const id = ctx.query.id
   const res = await fetch(`http://localhost:3000/api/cluster/`)
   const json = await res.json()
 
   const filtered = sortByDate(json, Labels.months_range)
-  // console.log(filtered)
 
   return { data: json, filtered: filtered }
 }
-
-// export async function getStaticProps() {
-//   const res = await fetch('/api/cluster')
-//   const data = await res.json()
-
-//   return {
-//     props: {
-//       data,
-//     },
-//   }
-// }

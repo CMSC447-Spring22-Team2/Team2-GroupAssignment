@@ -8,6 +8,7 @@ export default function DoughnutChart({ labels, data }) {
         text: '# of Crimes by Group',
       },
     },
+    aspectRatio: true,
   }
   const chartData = {
     labels,
@@ -22,7 +23,5 @@ export default function DoughnutChart({ labels, data }) {
     ],
   }
 
-  return (
-    <Doughnut width="200px" height="200px" data={chartData} options={options} />
-  )
+  return <Doughnut data={chartData} options={options} />
 }

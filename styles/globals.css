@@ -37,7 +37,9 @@ article {
   background-color: #fff;
 }
 
-
+h4 {
+  text-align: right;
+}
 
 article p {
   margin-top: 16px;
@@ -77,3 +79,4 @@ footer {
   margin-right: 8px;
   opacity: 0.7;
 }
+
