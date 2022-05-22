@@ -1,9 +1,8 @@
 import { Bar } from 'react-chartjs-2'
-import faker from '@faker-js/faker'
-import styles from '../../styles/Home.module.css'
 
-export default function BarChart({ labels, data }) {
+export default function BarChart({ labels, data, maxUnit }) {
   const options = {
+    indexAxis: 'y',
     responsive: true,
     plugins: {
       legend: {
@@ -11,24 +10,38 @@ export default function BarChart({ labels, data }) {
       },
       title: {
         display: true,
-        text: 'Bar Chart',
+        text: 'Number of Crimes by Type',
       },
     },
-    maintainAspectRation: false,
+    scales: {
+      x: {
+        max: maxUnit,
+        // min: -3,
+        beginAtZero: true,
+      },
+      y: {
+        beginAtZero: true,
+        ticks: {
+          precision: 0,
+        },
+      },
+    },
+    maintainAspectRatio: true,
   }
-  const dataBar = {
+
+  const chartData = {
     labels,
     datasets: [
       {
-        label: 'Dataset 1',
+        label: 'Offenses',
         data: data,
-        backgroundColor: 'rgba(255, 159, 64, 0.2)',
-        borderColor: 'rgba(255, 159, 64, 1)',
+        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+        borderColor: 'rgba(54, 162, 235, 1)',
         borderWidth: 1,
       },
     ],
   }
-  //   return <Bar className={styles.card} options={options} data={dataBar} />
+  //   return <Bar className={styles.card} options={options} data={chartData} />
 
-  return <Bar options={options} data={dataBar} />
+  return <Bar options={options} data={chartData} />
 }

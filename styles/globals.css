@@ -37,7 +37,9 @@ article {
   background-color: #fff;
 }
 
-
+h4 {
+  text-align: right;
+}
 
 article p {
   margin-top: 16px;
@@ -56,3 +58,25 @@ footer {
   color: #fff;
   padding: 20px;
 }
+
+.info {
+  padding: 6px 8px;
+  font: 14px/16px Arial, Helvetica, sans-serif;
+  background: white;
+  border-radius: 5px;
+}
+
+.legend {
+  text-align: left;
+  line-height: 18px;
+  color: #555;
+}
+
+.legend i {
+  width: 18px;
+  height: 18px;
+  float: left;
+  margin-right: 8px;
+  opacity: 0.7;
+}
+

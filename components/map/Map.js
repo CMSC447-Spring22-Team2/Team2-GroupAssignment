@@ -1,10 +1,14 @@
-import { MapContainer, TileLayer, GeoJSON, Popup } from 'react-leaflet'
+import { MapContainer, TileLayer, GeoJSON } from 'react-leaflet'
 import { useRouter } from 'next/router'
 import L from 'leaflet'
 
-import Cluster from '../data/Neighborhood_Clusters.json'
+import Cluster from '../../data/Neighborhood_Clusters.json'
+import Legend from './Legend'
+import GetColor from '../../lib/GetColor'
 
 import 'leaflet/dist/leaflet.css'
+
+import Labels from '../../data/Labels.json'
 
 export default function Map() {
   const router = useRouter()
@@ -13,18 +17,23 @@ export default function Map() {
       lng: 38.9072,
       lat: -77.0369,
     },
-    zoom: 13,
+    zoom: 12,
     scroll: false,
   }
 
-  const clusterStyle = {
-    fillColor: 'red',
-    fillOpacity: 0.1,
-    color: 'dimgray',
-    weight: 3,
+  const totalCrimes = Labels.total_crimes
+  const position = [state.center.lng, state.center.lat]
+
+  const clusterStyle = (feature) => {
+    const id = feature.properties.NAME.replace(/\D/g, '')
+    return {
+      fillColor: GetColor(totalCrimes[`cluster ${id}`]),
+      fillOpacity: 0.5,
+      color: 'dimgray',
+      weight: 3,
+    }
   }
 
-  const position = [state.center.lng, state.center.lat]
   const geojson = L.geoJSON(Cluster, {
     style: clusterStyle,
     onEachFeature: onEachFeature,
@@ -37,10 +46,11 @@ export default function Map() {
 
   const highlightFeature = (e) => {
     const layer = e.target
+
     layer.setStyle({
       weight: 5,
       color: 'black',
-      fillOpacity: 0.7,
+      fillOpacity: 0.8,
     })
     // layer.bindPopup(layer.feature.properties.NAME).openPopup()
     layer.bringToFront()
@@ -78,6 +88,7 @@ export default function Map() {
           style={clusterStyle}
           onEachFeature={onEachFeature}
         />
+        <Legend />
       </MapContainer>
     </>
   )

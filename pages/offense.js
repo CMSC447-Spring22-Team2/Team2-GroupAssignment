@@ -1,120 +1,118 @@
-import style from '../styles/Offense.module.css'
-
 import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
+  TimeScale,
   BarElement,
+  ArcElement,
+  PointElement,
+  LineElement,
+  Filler,
   Title,
   Tooltip,
   Legend,
-  ArcElement,
 } from 'chart.js'
-import { Bar, Doughnut } from 'react-chartjs-2'
-import faker from '@faker-js/faker'
-import styles from '../styles/Home.module.css'
+
+import style from '../styles/Offense.module.css'
+
+import { useState } from 'react'
+import { Typography, Slider, Grid } from '@mui/material'
+
+import BarChart from '../components/chart/BarChart'
+import DoughnutChart from '../components/chart/DoughnutChart'
+import { getChartData, sortByDate } from '../lib/FilterData'
+
+import Labels from '../data/Labels.json'
 
 ChartJS.register(
   CategoryScale,
   LinearScale,
+  TimeScale,
   BarElement,
+  ArcElement,
+  PointElement,
+  LineElement,
+  Filler,
   Title,
   Tooltip,
-  Legend,
-  ArcElement
+  Legend
 )
 
-export default function offense({ data }) {
-  const options = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: 'top',
-      },
-      title: {
-        display: true,
-        text: 'Bar Chart',
-      },
-    },
+export default function Offense({ data, filtered }) {
+  const offenseTypeLabels = Labels.offense_types
+  const offenseGroupLabels = Labels.offense_group
+
+  const [chartData, setChartData] = useState(filtered)
+
+  const months_range = Labels.months_range
+
+  const marks = []
+  for (let i = 0; i < 25; i += 4) {
+    marks.push({ value: i, label: months_range[i] })
   }
 
-  const labels = [
-    'Offense 1',
-    'Offense 2',
-    'Offense 3',
-    'Offense 4',
-    'Offense 5',
-    'Offense 6',
-  ]
+  const [value, setValue] = useState([0, 24])
 
-  const tmpDataBar = labels.map(() =>
-    faker.datatype.number({ min: 0, max: 977 })
+  const handleChange = (event, newValue, activeThumb) => {
+    if (!Array.isArray(newValue)) {
+      return
+    }
+
+    setValue(newValue)
+
+    const slice = filtered.slice(value[0], value[1] + 1)
+    setChartData(slice)
+  }
+
+  const { offenseTypeData, offenseGroupData } = getChartData(
+    chartData,
+    offenseTypeLabels,
+    offenseGroupLabels
   )
-  const tmpDataPie = labels.map(() =>
-    faker.datatype.number({ min: 0, max: 10000 })
-  )
-  console.log(tmpDataBar)
-
-  const dataBar = {
-    labels,
-    datasets: [
-      {
-        label: 'Dataset 1',
-        data: tmpDataBar,
-        backgroundColor: 'gray',
-      },
-    ],
-  }
-
-  const dataPie = {
-    labels,
-    datasets: [
-      {
-        label: '# of crimes',
-        data: tmpDataPie,
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)',
-        ],
-        borderColor: [
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)',
-          'rgba(255, 159, 64, 1)',
-        ],
-        borderWidth: 1,
-      },
-    ],
-  }
 
   return (
     <main>
       <title>Offense Type</title>
       <div className={style.title}>
         <h1>Distribution of Crimes by Offense</h1>
-        {/* <p>{data[0].offense_key}</p> */}
       </div>
-      <div className={styles.grid}>
-        <Bar className={styles.card} options={options} data={dataBar} />
-        <Doughnut className={styles.card} data={dataPie} />
+      <div>
+        <Typography align="right" variant="body2">
+          Filter Crime Data Based on Start and End Dates
+        </Typography>
+        <Slider
+          getAriaLabel={() => 'Select Range of Dates'}
+          value={value}
+          onChange={handleChange}
+          onChangeCommitted={handleChange}
+          valueLabelDisplay="auto"
+          valueLabelFormat={(v) => months_range[v]}
+          marks={marks}
+          min={0}
+          max={24}
+        />
+        <Grid container spacing={4} alignItems="flex-start">
+          <Grid item xs={8}>
+            <BarChart labels={offenseTypeLabels} data={offenseTypeData} />
+          </Grid>
+          <Grid item xs={4}>
+            <DoughnutChart
+              labels={offenseGroupLabels}
+              data={offenseGroupData}
+            />
+          </Grid>
+        </Grid>
       </div>
     </main>
   )
 }
 
-// export async function getStaticProps() {
-//   const res = await fetch('/api/cluster')
-//   const data = await res.json()
+Offense.getInitialProps = async (ctx) => {
+  const id = ctx.query.id
+  const res = await fetch(`http://localhost:3000/api/cluster/`)
+  const json = await res.json()
 
-//   return {
-//     props: {
-//       data,
-//     },
-//   }
-// }
+  const filtered = sortByDate(json, Labels.months_range)
+
+  return { data: json, filtered: filtered }
+}
