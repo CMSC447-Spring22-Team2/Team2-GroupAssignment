@@ -24,6 +24,9 @@ def loadFile(path):
     Parses through the data, formatting it into a dictionary whose keys are the file's
     headers and data are columns. Returns this resulting dictionary.
     '''
+    if not os.path.exists(path):
+        return None
+
     # Open the csv file
     with open(path, 'r') as f:
         # Read in the data and seperate the header
@@ -156,4 +159,7 @@ def initDB(infoDict):
     db.close()
 
 infoDict = loadFile(getFilePath('dc-crimes-search-results.csv'))
-initDB(infoDict)
+if infoDict is None:
+    print( "Unable to open \"back-end/Parser/dc-crimes-search-results.csv\"")
+else:
+    initDB(infoDict)
