@@ -1,7 +1,6 @@
 -- SQLite
 DROP TABLE IF EXISTS CrimeData;
 DROP TABLE IF EXISTS CrimeLocation;
-DROP TABLE IF EXISTS CrimeTime;
 
 CREATE TABLE IF NOT EXISTS CrimeData (
     crime_id int primary key,
