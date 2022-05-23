@@ -16,30 +16,6 @@ export default function Home() {
         <div className="Map">
           <MapWithNoSSR className={styles.map} />
         </div>
-
-        <article>
-          <h2>
-            <a href="/offense">Distribution of Crimes by Offense</a>
-          </h2>
-          <p>
-            Lorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsum Lorem
-            ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsum Lorem ipsumLorem
-            ipsumLorem ipsumLorem ipsumLorem ipsum Lorem ipsumLorem ipsumLorem
-            ipsumLorem ipsumLorem ipsum
-          </p>
-        </article>
-
-        <article>
-          <h2>
-            <a href="/time">Distribution of Crimes by Time</a>
-          </h2>
-          <p>
-            Lorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsum Lorem
-            ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsum Lorem ipsumLorem
-            ipsumLorem ipsumLorem ipsumLorem ipsum Lorem ipsumLorem ipsumLorem
-            ipsumLorem ipsumLorem ipsum Test
-          </p>
-        </article>
       </main>
     </>
   )
